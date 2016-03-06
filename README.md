@@ -3,7 +3,7 @@ Self-Registration Plugin
 
 [![Build Status](https://travis-ci.org/kanboard/plugin-registration.svg?branch=master)](https://travis-ci.org/kanboard/plugin-registration)
 
-This plugin allow people to sign up to Kanboard.
+This plugin allows people to sign up to Kanboard.
 
 - An email verification is necessary
 - A domain restriction can be applied to avoid unwanted users
@@ -38,7 +38,7 @@ Documentation
 - From the login page a link to the sign up form is displayed
 - The user fill the form and submit
 - The user account is created but it's disabled
-- The user have to validate his email address to enable the account
+- The user has to validate his email address to enable the account
 
 ### Domain restriction
 

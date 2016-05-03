@@ -23,6 +23,8 @@ class RegistrationValidator extends UserValidator
      */
     public function validateCreation(array $values)
     {
+        $domains = $this->config->get('registration_email_domain', '');
+
         $rules = array(
             new Validators\Required('username', t('The username is required')),
             new Validators\Required('email', t('The email is required')),
@@ -32,7 +34,7 @@ class RegistrationValidator extends UserValidator
         $result = $v->execute();
         $errors = $v->getErrors();
 
-        if ($result && !$this->validateDomainRestriction($values)) {
+        if ($result && $domains !== '' && !$this->validateDomainRestriction($values, $domains)) {
             $result = false;
             $errors = array('email' => array(t('You are not allowed to register')));
         }
@@ -45,17 +47,22 @@ class RegistrationValidator extends UserValidator
 
     /**
      * Validate domain restriction
-     * @param array $values
+     *
+     * @access private
+     * @param  array  $values
+     * @param  string $domains
      * @return bool
      */
-    private function validateDomainRestriction(array $values)
+    private function validateDomainRestriction(array $values, $domains)
     {
-        $domain = $this->config->get('registration_email_domain', '');
+        foreach (explode(',', $domains) as $domain) {
+            $domain = trim($domain);
 
-        if ($domain !== '') {
-            return strpos($values['email'], $domain) > 0;
+            if (strpos($values['email'], $domain) > 0) {
+                return true;
+            }
         }
 
-        return true;
+        return false;
     }
 }

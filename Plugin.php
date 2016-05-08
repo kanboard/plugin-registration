@@ -10,16 +10,17 @@ class Plugin extends Base
 {
     public function initialize()
     {
-        $this->on('app.bootstrap', function ($container) {
-            Translator::load($container['config']->getCurrentLanguage(), __DIR__.'/Locale');
-        });
-
         $this->applicationAccessMap->add('Register', '*', Role::APP_PUBLIC);
         $this->route->addRoute('/signup', 'Register', 'create', 'Registration');
         $this->route->addRoute('/signup/activate/:user_id/:token', 'Register', 'activate', 'Registration');
 
         $this->template->hook->attach('template:config:application', 'Registration:config/application');
         $this->template->hook->attach('template:auth:login-form:after', 'Registration:auth/login');
+    }
+
+    public function onStartup()
+    {
+        Translator::load($this->language->getCurrentLanguage(), __DIR__.'/Locale');
     }
 
     public function getClasses()
@@ -46,7 +47,7 @@ class Plugin extends Base
 
     public function getPluginVersion()
     {
-        return '1.0.1';
+        return '1.0.2';
     }
 
     public function getPluginHomepage()

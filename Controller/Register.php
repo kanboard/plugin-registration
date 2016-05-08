@@ -41,8 +41,8 @@ class Register extends Base
     public function create(array $values = array(), array $errors = array())
     {
         $this->response->html($this->helper->layout->app('Registration:register/create', array(
-            'timezones' => $this->config->getTimezones(true),
-            'languages' => $this->config->getLanguages(true),
+            'timezones' => $this->timezone->getTimezones(true),
+            'languages' => $this->language->getLanguages(true),
             'errors' => $errors,
             'values' => $values,
             'title' => t('Sign up'),

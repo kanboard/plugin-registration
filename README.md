@@ -17,18 +17,19 @@ Author
 Requirements
 ------------
 
-- Kanboard version >= 1.0.27
+- Kanboard version >= 1.0.29
 - Kanboard configured to send emails
 
 Installation
 ------------
 
-- Decompress the archive in the `plugins` folder
+You have the choice between 3 methods:
 
-or
+1. Install the plugin from the Kanboard plugin manager in one click
+2. Download the zip file and decompress everything under the directory `plugins/Registration`
+3. Clone this repository into the folder `plugins/Registration`
 
-- Create a folder **plugins/Registration**
-- Copy all files under this directory
+Note: Plugin folder is case-sensitive.
 
 Documentation
 -------------

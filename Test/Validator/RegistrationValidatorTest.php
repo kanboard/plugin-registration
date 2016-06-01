@@ -19,7 +19,7 @@ class RegistrationValidatorTest extends Base
 
     public function testWithDomainRestriction()
     {
-        $this->container['config']->save(array('registration_email_domain' => 'mydomain.tld'));
+        $this->container['configModel']->save(array('registration_email_domain' => 'mydomain.tld'));
         $validator = new RegistrationValidator($this->container);
 
         list($result,) = $validator->validateCreation(array(
@@ -43,7 +43,7 @@ class RegistrationValidatorTest extends Base
 
     public function testWithMultipleDomainRestriction()
     {
-        $this->container['config']->save(array('registration_email_domain' => 'domain1.tld, domain2.tld ,domain3.tld'));
+        $this->container['configModel']->save(array('registration_email_domain' => 'domain1.tld, domain2.tld ,domain3.tld'));
         $validator = new RegistrationValidator($this->container);
 
         list($result,) = $validator->validateCreation(array(

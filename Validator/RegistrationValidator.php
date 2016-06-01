@@ -23,7 +23,7 @@ class RegistrationValidator extends UserValidator
      */
     public function validateCreation(array $values)
     {
-        $domains = $this->config->get('registration_email_domain', '');
+        $domains = $this->configModel->get('registration_email_domain', '');
 
         $rules = array(
             new Validators\Required('username', t('The username is required')),

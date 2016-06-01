@@ -2,8 +2,8 @@
 
 namespace Kanboard\Plugin\Registration\Controller;
 
-use Kanboard\Controller\Base;
-use Kanboard\Notification\Mail as MailNotification;
+use Kanboard\Controller\BaseController;
+use Kanboard\Notification\MailNotification;
 
 /**
  * Register Controller
@@ -11,7 +11,7 @@ use Kanboard\Notification\Mail as MailNotification;
  * @package  controller
  * @author   Frederic Guillot
  */
-class Register extends Base
+class Register extends BaseController
 {
     /**
      * Activate user account
@@ -23,9 +23,9 @@ class Register extends Base
         $token = $this->request->getStringParam('token');
         $user_id = $this->request->getIntegerParam('user_id');
 
-        if ($this->userMetadata->get($user_id, 'registration_token') === $token) {
-            $this->user->update(array('id' => $user_id, 'is_active' => 1));
-            $this->userMetadata->remove($user_id, 'registration_token');
+        if ($this->userMetadataModel->get($user_id, 'registration_token') === $token) {
+            $this->userModel->update(array('id' => $user_id, 'is_active' => 1));
+            $this->userMetadataModel->remove($user_id, 'registration_token');
         }
 
         $this->response->redirect($this->helper->url->to('auth', 'login'));
@@ -41,8 +41,8 @@ class Register extends Base
     public function create(array $values = array(), array $errors = array())
     {
         $this->response->html($this->helper->layout->app('Registration:register/create', array(
-            'timezones' => $this->timezone->getTimezones(true),
-            'languages' => $this->language->getLanguages(true),
+            'timezones' => $this->timezoneModel->getTimezones(true),
+            'languages' => $this->languageModel->getLanguages(true),
             'errors' => $errors,
             'values' => $values,
             'title' => t('Sign up'),
@@ -62,7 +62,7 @@ class Register extends Base
 
         if ($valid) {
             $values['is_active'] = 0;
-            $user_id = $this->user->create($values);
+            $user_id = $this->userModel->create($values);
 
             if ($user_id !== false) {
                 $this->postCreation($values, $user_id);
@@ -72,7 +72,7 @@ class Register extends Base
             }
         }
 
-        $this->create($values, $errors);
+        return $this->create($values, $errors);
     }
 
     /**
@@ -85,10 +85,10 @@ class Register extends Base
     private function postCreation(array $values, $user_id)
     {
         $token = $this->token->getToken();
-        $this->userMetadata->save($user_id, array('registration_token' => $token));
+        $this->userMetadataModel->save($user_id, array('registration_token' => $token));
 
         if (! empty($values['notifications_enabled'])) {
-            $this->userNotificationType->saveSelectedTypes($user_id, array(MailNotification::TYPE));
+            $this->userNotificationTypeModel->saveSelectedTypes($user_id, array(MailNotification::TYPE));
         }
 
         $values['id'] = $user_id;

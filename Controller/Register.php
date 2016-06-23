@@ -28,7 +28,7 @@ class Register extends BaseController
             $this->userMetadataModel->remove($user_id, 'registration_token');
         }
 
-        $this->response->redirect($this->helper->url->to('auth', 'login'));
+        $this->response->redirect($this->helper->url->to('AuthController', 'login'));
     }
 
     /**
@@ -66,7 +66,7 @@ class Register extends BaseController
 
             if ($user_id !== false) {
                 $this->postCreation($values, $user_id);
-                return $this->response->redirect($this->helper->url->to('auth', 'login'));
+                return $this->response->redirect($this->helper->url->to('AuthController', 'login'));
             } else {
                 $errors = array('username' => array(t('Unable to create your account')));
             }

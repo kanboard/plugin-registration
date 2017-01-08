@@ -17,7 +17,7 @@ Author
 Requirements
 ------------
 
-- Kanboard version >= 1.0.29
+- Kanboard version >= 1.0.37
 - Kanboard configured to send emails
 
 Installation

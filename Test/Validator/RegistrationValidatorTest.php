@@ -39,6 +39,24 @@ class RegistrationValidatorTest extends Base
         ));
 
         $this->assertTrue($result);
+
+        list($result,) = $validator->validateCreation(array(
+            'username' => 'test',
+            'email' => 'test@mydomain.tld.example.org',
+            'password' => 'test123',
+            'confirmation' => 'test123',
+        ));
+
+        $this->assertFalse($result);
+
+        list($result,) = $validator->validateCreation(array(
+            'username' => 'test',
+            'email' => 'test+mydomain.tld@example.org',
+            'password' => 'test123',
+            'confirmation' => 'test123',
+        ));
+
+        $this->assertFalse($result);
     }
 
     public function testWithMultipleDomainRestriction()

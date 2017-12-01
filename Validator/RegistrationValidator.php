@@ -55,10 +55,15 @@ class RegistrationValidator extends UserValidator
      */
     private function validateDomainRestriction(array $values, $domains)
     {
-        foreach (explode(',', $domains) as $domain) {
-            $domain = trim($domain);
+        if (strpos($values['email'], '@') === false) {
+            return false;
+        }
 
-            if (strpos($values['email'], $domain) > 0) {
+        list(, $hostname) = explode('@', $values['email']);
+        $hostname = trim($hostname);
+
+        foreach (explode(',', $domains) as $domain) {
+            if ($hostname === trim($domain)) {
                 return true;
             }
         }

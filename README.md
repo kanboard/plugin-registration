@@ -1,8 +1,6 @@
 Self-Registration Plugin
 ========================
 
-[![Build Status](https://travis-ci.org/kanboard/plugin-registration.svg?branch=master)](https://travis-ci.org/kanboard/plugin-registration)
-
 This plugin allows people to sign up to Kanboard.
 
 - An email verification is necessary

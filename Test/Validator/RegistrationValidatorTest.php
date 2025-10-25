@@ -1,5 +1,7 @@
 <?php
 
+namespace KanboardTests\units;
+
 use Kanboard\Plugin\Registration\Validator\RegistrationValidator;
 
 class RegistrationValidatorTest extends Base
